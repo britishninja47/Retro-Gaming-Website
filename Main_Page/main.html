@@ -1,38 +1,447 @@
+<DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="main.css">
-  <title>Main Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RETRO BLAST | Classic Arcade Gaming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23111" /><path d="M0 0L100 100" stroke="%23333" stroke-width="1" /><path d="M100 0L0 100" stroke="%23333" stroke-width="1" /></svg>');
+            z-index: -2;
+        }
+
+        .pixel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(64, 224, 208, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.2) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .floating-pixels {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .pixel {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ff00ff;
+            animation: float 15s infinite linear;
+        }
+
+        .pixel:nth-child(2n) {
+            background-color: #00ffff;
+            animation-duration: 20s;
+        }
+
+        .pixel:nth-child(3n) {
+            background-color: #ffff00;
+            animation-duration: 25s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.3rem;
+            color: #eeeaee;
+            text-shadow: 0 0 5px #ff00cc, 0 0 10px #ff00cc, 0 0 20px #ff00cc;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Hero Content */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            z-index: 5;
+        }
+
+        .hero h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+            color: #fff;
+            text-shadow: 0 0 10px #ff00ff,
+                         0 0 20px #ff00ff,
+                         0 0 30px #ff00ff;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff00ff,
+                             0 0 20px #ff00ff,
+                             0 0 30px #ff00ff;
+            }
+            to {
+                text-shadow: 0 0 20px #ff00ff,
+                             0 0 30px #ff00ff,
+                             0 0 40px #ff00ff,
+                             0 0 50px #ff00ff,
+                             0 0 60px #ff00ff;
+            }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            color: #f8f8f8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, #ff6b6b, #ff00ff);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 0, 255, 0.6);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        section {
+            margin-bottom: 6rem;
+        }
+
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #ff6b6b;
+            text-align: center;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.2);
+        }
+
+        .game-img {
+            height: 200px;
+            background: linear-gradient(45deg, #302b63, #24243e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .game-content {
+            padding: 1.5rem;
+        }
+
+        .game-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #00ffff;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature i {
+            font-size: 3rem;
+            color: #ff00ff;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+    footer {
+       font-family: 'Press Start 2P', fantasy;
+      background-color: #111;
+      border-top: 4px solid #00ffea;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.8rem;
+      color: #00ffea;
+    }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.9rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ff00ff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<header>
-    <h1>RETRO ARCADE</h1>
-    <nav>
-      <a href="#nintendo">Nintendo</a>
-      <a href="#playstation">PlayStation</a>
-      <a href="#xbox">Xbox</a>
-    </nav>
-  </header>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="pixel-overlay"></div>
+        <div class="floating-pixels">
+            <div class="pixel" style="top: 20%; left: 10%;"></div>
+            <div class="pixel" style="top: 60%; left: 80%;"></div>
+            <div class="pixel" style="top: 40%; left: 50%;"></div>
+            <div class="pixel" style="top: 70%; left: 30%;"></div>
+            <div class="pixel" style="top: 10%; left: 70%;"></div>
+        </div>
 
-  <main>
-    <section id="nintendo">
-      <h2>Nintendo</h2>
-      <p>Explore the legacy of Nintendo, from the NES to the Switch. Relive classic franchises like Mario, Zelda, and Metroid.</p>
-    </section>
+        <nav>
+            <div class="logo">LEVEL 0NE GAMING</div>
+            <div class="nav-links">
+                <a href="/Landing_Page/landing_page.html">Home</a>
+                <a href="#">Games</a>
+                <a href="#">About</a>
+                <a href="#">News</a>
+                <a href="#">Contact</a>
+            </div>
+        </nav>
 
-    <section id="playstation">
-      <h2>PlayStation</h2>
-      <p>Journey through generations of gaming with PlayStation — from the PS1’s polygons to the cinematic experiences of PS5.</p>
-    </section>
+        <div class="hero">
+            <h1>RETRO GAMING REBORN</h1>
+            <p>Experience the nostalgia of classic arcade games with a twist created by Myself. Start on Level 1 in my pixel-perfect universe!</p>
+            <a href="#" class="cta-button">PLAY NOW</a>
+        </div>
+    </header>
 
-    <section id="xbox">
-      <h2>Xbox</h2>
-      <p>Power up with Xbox, home to Halo, Forza, and Game Pass. Discover what made Microsoft a gaming giant.</p>
-    </section>
-  </main>
+    <main class="container">
+        <section class="featured-games">
+            <h2>FEATURED GAMES</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-img">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="game-content">
+                        <h3>Space Invaders DX</h3>
+                        <p>Defend Earth from alien invasion in this updated classic with enhanced graphics and new power-ups.</p>
+                    </div>
+                </div>
 
-  <footer>
-    <p>© 2025 Retro Arcade Inc. | Designed for the gamers who never grew up.</p>
-  </footer>
+                <div class="game-card">
+                    <div class="game-img">
+                        <i class="fas fa-ghost"></i>
+                    </div>
+                    <div class="game-content">
+                        <h3>Pixel Pac-Man</h3>
+                        <p>Navigate the maze, munch dots, and avoid ghosts in this fast-paced arcade favorite.</p>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-img">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <div class="game-content">
+                        <h3>Dragon Quest</h3>
+                        <p>Embark on an epic adventure through a pixelated fantasy world filled with monsters and treasure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2>WHY PLAY WITH US?</h2>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Daily Tournaments</h3>
+                    <p>Compete against players worldwide and win amazing prizes.</p>
+                </div>
+
+                <div class="feature">
+                    <i class="fas fa-users"></i>
+                    <h3>Multiplayer</h3>
+                    <p>Play with friends or make new ones in our online arcade.</p>
+                </div>
+
+                <div class="feature">
+                    <i class="fas fa-undo"></i>
+                    <h3>Nostalgia</h3>
+                    <p>Authentic retro experience with modern enhancements.</p>
+                </div>
+
+                <div class="feature">
+                    <i class="fas fa-medal"></i>
+                    <h3>Achievements</h3>
+                    <p>Unlock badges and achievements as you play.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>© 2025 Retro Arcade Inc. | Designed for the gamers who never grew up.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating pixels
+        function createPixels() {
+            const floatingPixels = document.querySelector('.floating-pixels');
+            for (let i = 0; i < 20; i++) {
+                const pixel = document.createElement('div');
+                pixel.classList.add('pixel');
+                pixel.style.left = Math.random() * 100 + '%';
+                pixel.style.top = Math.random() * 100 + '%';
+                pixel.style.animationDuration = (15 + Math.random() * 15) + 's';
+                pixel.style.animationDelay = Math.random() * 5 + 's';
+                floatingPixels.appendChild(pixel);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', createPixels);
+    </script>
 </body>
 </html>
