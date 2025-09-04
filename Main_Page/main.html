@@ -1,9 +1,9 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RETRO BLAST | Classic Arcade Gaming</title>
+    <title>LEVEL 0NE GAMING | Retro Arcade Experience</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
@@ -19,6 +19,59 @@
             color: #fff;
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Global floating pixels background */
+        .global-pixels {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .pixel {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ff00ff;
+            animation: float 15s infinite linear;
+            opacity: 0.6;
+        }
+
+        .pixel:nth-child(2n) {
+            background-color: #00ffff;
+            animation-duration: 20s;
+        }
+
+        .pixel:nth-child(3n) {
+            background-color: #ffff00;
+            animation-duration: 25s;
+        }
+
+        .pixel:nth-child(5n) {
+            background-color: #ff6b6b;
+            animation-duration: 18s;
+        }
+
+        .pixel:nth-child(7n) {
+            background-color: #6bff6b;
+            animation-duration: 22s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Header Styles */
@@ -52,42 +105,6 @@
                 radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.2) 0%, transparent 40%),
                 radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.2) 0%, transparent 40%);
             z-index: -1;
-        }
-
-        .floating-pixels {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        .pixel {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background-color: #ff00ff;
-            animation: float 15s infinite linear;
-        }
-
-        .pixel:nth-child(2n) {
-            background-color: #00ffff;
-            animation-duration: 20s;
-        }
-
-        .pixel:nth-child(3n) {
-            background-color: #ffff00;
-            animation-duration: 25s;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
         }
 
         /* Navigation */
@@ -198,6 +215,11 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 5rem 2rem;
+            position: relative;
+            z-index: 2;
+            background: rgba(15, 12, 41, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         section {
@@ -264,6 +286,12 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2);
         }
 
         .feature i {
@@ -273,15 +301,17 @@
         }
 
         /* Footer */
-    footer {
-       font-family: 'Press Start 2P', fantasy;
-      background-color: #111;
-      border-top: 4px solid #00ffea;
-      text-align: center;
-      padding: 10px;
-      font-size: 0.8rem;
-      color: #00ffea;
-    }
+        footer {
+            font-family: 'Press Start 2P', fantasy;
+            background-color: #111;
+            border-top: 4px solid #00ffea;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #00ffea;
+            position: relative;
+            z-index: 2;
+        }
 
         .footer-content {
             max-width: 1200px;
@@ -318,26 +348,26 @@
             .games-grid {
                 grid-template-columns: 1fr;
             }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Global floating pixels background -->
+    <div class="global-pixels" id="globalPixels"></div>
+
     <header>
         <div class="header-bg"></div>
         <div class="pixel-overlay"></div>
-        <div class="floating-pixels">
-            <div class="pixel" style="top: 20%; left: 10%;"></div>
-            <div class="pixel" style="top: 60%; left: 80%;"></div>
-            <div class="pixel" style="top: 40%; left: 50%;"></div>
-            <div class="pixel" style="top: 70%; left: 30%;"></div>
-            <div class="pixel" style="top: 10%; left: 70%;"></div>
-        </div>
 
         <nav>
             <div class="logo">LEVEL 0NE GAMING</div>
             <div class="nav-links">
                 <a href="/Landing_Page/landing_page.html">Home</a>
-                <a href="#">Games</a>
+                <a href="/Games_Page/games.html">Games</a>
                 <a href="#">About</a>
                 <a href="#">News</a>
                 <a href="#">Contact</a>
@@ -360,8 +390,8 @@
                         <i class="fas fa-gamepad"></i>
                     </div>
                     <div class="game-content">
-                        <h3>Space Invaders DX</h3>
-                        <p>Defend Earth from alien invasion in this updated classic with enhanced graphics and new power-ups.</p>
+                        <h3>Samurai Code</h3>
+                        <p>Play as a samurai with one objective...dont lose!</p>
                     </div>
                 </div>
 
@@ -370,8 +400,8 @@
                         <i class="fas fa-ghost"></i>
                     </div>
                     <div class="game-content">
-                        <h3>Pixel Pac-Man</h3>
-                        <p>Navigate the maze, munch dots, and avoid ghosts in this fast-paced arcade favorite.</p>
+                        <h3>Pong-Zero</h3>
+                        <p>Face-off against the computer in this colourful challenging version of Pong.</p>
                     </div>
                 </div>
 
@@ -415,33 +445,45 @@
                 </div>
             </div>
         </section>
+
+        <section class="newsletter">
+            <h2>JOIN THE RETRO REVOLUTION</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Subscribe to our newsletter for exclusive game updates, tips, and special offers!</p>
+            <form style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <input type="email" placeholder="Enter your email" style="padding: 1rem; width: 300px; border: none; border-radius: 4px; background: rgba(255, 255, 255, 0.1); color: white;">
+                <button type="submit" class="cta-button" style="padding: 1rem 2rem;">Subscribe</button>
+            </form>
+        </section>
     </main>
 
     <footer>
         <div class="footer-content">
             <div class="social-links">
                 <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
             </div>
-            <p>© 2025 Retro Arcade Inc. | Designed for the gamers who never grew up.</p>
+            <p>© 2025 LEVEL 0NE GAMING | Designed for the gamers who never grew up.</p>
         </div>
     </footer>
 
     <script>
-        // Create floating pixels
-        function createPixels() {
-            const floatingPixels = document.querySelector('.floating-pixels');
-            for (let i = 0; i < 20; i++) {
+        // Create floating pixels for the entire page
+        function createGlobalPixels() {
+            const globalPixels = document.getElementById('globalPixels');
+            for (let i = 0; i < 60; i++) {
                 const pixel = document.createElement('div');
                 pixel.classList.add('pixel');
                 pixel.style.left = Math.random() * 100 + '%';
                 pixel.style.top = Math.random() * 100 + '%';
                 pixel.style.animationDuration = (15 + Math.random() * 15) + 's';
                 pixel.style.animationDelay = Math.random() * 5 + 's';
-                floatingPixels.appendChild(pixel);
+                globalPixels.appendChild(pixel);
             }
         }
 
-        document.addEventListener('DOMContentLoaded', createPixels);
+        document.addEventListener('DOMContentLoaded', createGlobalPixels);
     </script>
 </body>
 </html>
